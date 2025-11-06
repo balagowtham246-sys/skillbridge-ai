@@ -1,0 +1,49 @@
+📱 SkillBridge AI — Wireframe Layouts
+------------------------------------
+
+🧩 1. Home / Input Page
+Purpose: Collect user input
+
+-------------------------------------------------
+| SkillBridge AI 🧠                              |
+| "Bridge your skills. Build your future."       |
+|                                                |
+| Current Skills: [__________]                   |
+| Target Role:    [__________]                   |
+| [Generate Path] (button)                       |
+-------------------------------------------------
+
+Features:
+- Two input fields (skills + goal)
+- "Generate Path" button triggers backend API
+
+-------------------------------------------------
+
+🧩 2. Results / Output Page
+Purpose: Display AI-generated learning path
+
+-------------------------------------------------
+| Recommended Path for : Data Scientist          |
+|------------------------------------------------|
+| 🔹 Learn Python – 2 weeks                      |
+| 🔹 SQL for Analytics – 3 weeks                 |
+| 🔹 Machine Learning Basics – 4 weeks           |
+|------------------------------------------------|
+| [Copy Path]   [Download PDF]                   |
+-------------------------------------------------
+
+Features:
+- Results displayed dynamically from backend
+- Copy or download the generated learning path
+
+-------------------------------------------------
+
+🧩 3. About / Info Page
+Purpose: Introduce team & tech
+
+-------------------------------------------------
+| About SkillBridge AI                          |
+| QUADCORE Team – IBM TechXchange 2025          |
+| Our Tech Stack: FastAPI, React, Watsonx AI     |
+| Contact: balagowtham246-sys @github           |
+-------------------------------------------------

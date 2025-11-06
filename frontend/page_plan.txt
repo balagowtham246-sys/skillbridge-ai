@@ -1,0 +1,22 @@
+📘 Frontend Page Plan — SkillBridge AI
+
+Pages to Build:
+
+1️⃣ Home.jsx  
+   - Page for user input: current skills + goal role  
+   - Has a form with text fields and a "Generate Path" button  
+   - Sends data to FastAPI backend and navigates to Results page  
+
+2️⃣ Result.jsx  
+   - Displays the AI-generated learning path (courses + durations)  
+   - Has "Copy Path" and "Download PDF" buttons  
+   - Uses clean, card-based layout  
+
+3️⃣ About.jsx  
+   - Static info page: Team QUADCORE, project vision, and tech stack  
+
+Shared Components:
+
+- Navbar.jsx → links to Home, Result, and About  
+- Footer.jsx → copyright + IBM TechXchange mention  
+- LoadingSpinner.jsx → optional visual indicator while AI generates output

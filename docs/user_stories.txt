@@ -1,0 +1,5 @@
+1️⃣  As a professional, I want to enter my current skills and target role so that AI can find what I need to learn next.
+
+2️⃣  As a learner, I want to see a personalized roadmap (skills, courses, durations) so that I can plan my growth clearly.
+
+3️⃣  As a user, I want to save or copy my learning path so that I can revisit or share it later.
