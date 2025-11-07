@@ -16,7 +16,7 @@ import json
 # 🔹 Import local AI engine modules
 from ai_engine.recommender import recommend_courses
 from ai_engine.summarizer import generate_summary
-from ai_engine.utils import detect_domain
+from ai_engine import detect_domain
 
 app = FastAPI(title="SkillBridge AI", version="2.1")
 
