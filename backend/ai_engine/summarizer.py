@@ -1,3 +1,5 @@
+# ai_engine/summarizer.py
+
 def generate_summary(goal: str, skills: list, domain: str) -> str:
     skill_text = ", ".join(skills) if skills else "no listed skills"
     base_summary = (
