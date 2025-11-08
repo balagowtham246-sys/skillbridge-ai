@@ -1,33 +1,25 @@
-import random
+# ai_engine/recommender.py
 
-def recommend_courses(goal: str):
-    library = {
-        "Data Scientist": [
-            "Python for Data Analysis",
-            "Machine Learning Foundations",
-            "Data Visualization with Seaborn"
-        ],
-        "Web Developer": [
-            "HTML, CSS & JS Bootcamp",
-            "React.js from Scratch",
-            "Node.js API Development"
-        ],
-        "AI Engineer": [
-            "Deep Learning with TensorFlow",
-            "Building Neural Networks",
-            "Prompt Engineering 101"
-        ],
-        "Cloud Engineer": [
-            "AWS Essentials",
-            "Docker & Kubernetes Fundamentals",
-            "CI/CD with Jenkins"
-        ],
+def recommend_courses(skills: list):
+    """
+    Simple recommender: takes user's skills and returns learning suggestions.
+    """
+    suggestions = []
+
+    for skill in skills:
+        if "python" in skill.lower():
+            suggestions.append("Learn Advanced Python for Data Science")
+        elif "machine learning" in skill.lower():
+            suggestions.append("Complete ML Certification - Coursera/IBM")
+        elif "data" in skill.lower():
+            suggestions.append("Study SQL + PowerBI for Data Analytics")
+        elif "ai" in skill.lower():
+            suggestions.append("Explore Deep Learning and NLP fundamentals")
+        else:
+            suggestions.append(f"Explore advanced topics related to {skill}")
+
+    return {
+        "input_skills": skills,
+        "recommended_courses": suggestions,
+        "next_step": "Focus on your strongest interest area first."
     }
-
-    domain_courses = library.get(goal.title(), library["AI Engineer"])
-    courses = random.sample(domain_courses, k=min(3, len(domain_courses)))
-
-    formatted = [
-        {"title": title, "duration": f"{random.randint(2,5)} weeks"} for title in courses
-    ]
-    return formatted

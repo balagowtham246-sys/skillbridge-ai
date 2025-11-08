@@ -16,9 +16,17 @@ import json
 # 🔹 Import local AI engine modules
 from ai_engine.recommender import recommend_courses
 from ai_engine.summarizer import generate_summary
-from ai_engine import detect_domain
+from ai_engine.utils import detect_domain
+from ai_engine.role_predictor import predict_role
 
+# 🔹 Import database functions
+from database import init_db, log_event, get_all_analytics
+
+# Initialize FastAPI app
 app = FastAPI(title="SkillBridge AI", version="2.1")
+
+# 🔹 Initialize database at startup
+init_db()
 
 # 🔹 Allow frontend to communicate with backend
 app.add_middleware(
@@ -57,7 +65,7 @@ def log_user_request(data, result):
 @app.post("/generate_path")
 def generate_path(data: SkillInput):
     domain = detect_domain(data.goal_role)
-    courses = recommend_courses(data.goal_role)
+    courses = recommend_courses(data.current_skills)
     summary = generate_summary(data.goal_role, data.current_skills, domain)
 
     result = {
@@ -67,8 +75,9 @@ def generate_path(data: SkillInput):
         "summary": summary
     }
 
-    # Log every user request
+    # Log every user request (JSON + DB)
     log_user_request(data, result)
+    log_event("/generate_path", {"goal_role": data.goal_role, "current_skills": data.current_skills}, result)
     return result
 
 
@@ -76,29 +85,52 @@ def generate_path(data: SkillInput):
 #  API 2: View Analytics  (GET)
 # ---------------------------------------------
 @app.get("/analytics")
-def get_analytics():
-    log_file = "logs/usage_log.json"
-    if not os.path.exists(log_file):
-        return {"message": "No data yet!"}
+def analytics():
+    return {"analytics": get_all_analytics()}
 
-    with open(log_file, "r", encoding="utf-8") as f:
-        entries = [json.loads(line) for line in f]
 
-    total_requests = len(entries)
-    domain_counts = {}
-    for e in entries:
-        domain = e["domain"]
-        domain_counts[domain] = domain_counts.get(domain, 0) + 1
+# ---------------------------------------------
+#  API 3: Detect Domain  (POST)
+# ---------------------------------------------
+@app.post("/detect_domain")
+def get_domain(data: dict):
+    text = data.get("text", "")
+    result = detect_domain(text)
+    log_event("/detect_domain", {"text": text}, {"domain": result})
+    return {"domain": result}
 
-    most_popular_domain = (
-        max(domain_counts, key=domain_counts.get) if domain_counts else None
-    )
 
-    return {
-        "total_requests": total_requests,
-        "popular_domains": domain_counts,
-        "top_domain": most_popular_domain,
-    }
+# ---------------------------------------------
+#  API 4: Recommend Courses  (POST)
+# ---------------------------------------------
+@app.post("/recommend")
+def recommend(data: dict):
+    skills = data.get("skills", [])
+    result = recommend_courses(skills)
+    log_event("/recommend", {"skills": skills}, result)
+    return result
+
+
+# ---------------------------------------------
+#  API 5: Generate Summary  (POST)
+# ---------------------------------------------
+@app.post("/summarize")
+def summarize(data: dict):
+    text = data.get("text", "")
+    result = generate_summary(text, [], "General")
+    log_event("/summarize", {"text": text}, {"summary": result})
+    return {"summary": result}
+
+
+# ---------------------------------------------
+#  API 6: Predict Role and Career Path  (POST)
+# ---------------------------------------------
+@app.post("/predict_role")
+def predict(data: dict):
+    skills = data.get("skills", [])
+    result = predict_role(skills)
+    log_event("/predict_role", {"skills": skills}, result)
+    return result
 
 
 # ---------------------------------------------
