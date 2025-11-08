@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Optional: small customization */
+body {
+  @apply bg-slate-900 text-white;
+  font-family: 'Inter', sans-serif;
+}
