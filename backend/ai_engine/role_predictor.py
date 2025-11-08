@@ -1,49 +1,63 @@
-# ai_engine/role_predictor.py
+"""
+SkillBridge AI - Role Prediction Module
+"""
 
-def predict_role(skills: list):
+def predict_role(skills: list[str]) -> dict:
     """
-    Predicts a career role based on given skills.
-    This is a rule-based placeholder version (can be replaced with ML later).
-    """
-    skills_lower = [s.lower() for s in skills]
+    Predict potential roles and career paths based on current skills.
     
-    if any(word in skills_lower for word in ["python", "machine learning", "ai", "tensorflow"]):
-        role = "Machine Learning Engineer"
-        path = [
-            "Learn Deep Learning (TensorFlow/PyTorch)",
-            "Master Data Structures for ML",
-            "Work on Kaggle Projects",
-        ]
-    elif any(word in skills_lower for word in ["javascript", "react", "frontend"]):
-        role = "Frontend Developer"
-        path = [
-            "Learn Advanced React or Next.js",
-            "Practice UI/UX design principles",
-            "Build portfolio web apps"
-        ]
-    elif any(word in skills_lower for word in ["java", "spring", "backend"]):
-        role = "Backend Developer"
-        path = [
-            "Learn Microservices architecture",
-            "Study database optimization",
-            "Deploy APIs using Docker"
-        ]
-    elif any(word in skills_lower for word in ["data", "sql", "excel", "tableau"]):
-        role = "Data Analyst"
-        path = [
-            "Master Excel and SQL",
-            "Learn PowerBI or Tableau",
-            "Understand data storytelling"
-        ]
-    else:
-        role = "General Software Engineer"
-        path = [
-            "Explore full-stack development",
-            "Work on open-source contributions",
-            "Enhance problem-solving and algorithms"
-        ]
-
+    Args:
+        skills (list[str]): List of user's current skills
+        
+    Returns:
+        dict: Dictionary containing predicted roles and career paths
+    """
+    # Convert skills to lowercase for matching
+    skills = [skill.lower() for skill in skills]
+    
+    # Role definitions with required skills
+    roles = {
+        "Frontend Developer": {
+            "required_skills": ["html", "css", "javascript", "react", "vue", "angular"],
+            "career_path": ["Junior Frontend Developer", "Senior Frontend Developer", "UI/UX Engineer", "Technical Lead"],
+            "match_threshold": 0.4
+        },
+        "Backend Developer": {
+            "required_skills": ["python", "java", "node.js", "sql", "mongodb", "api"],
+            "career_path": ["Junior Backend Developer", "Senior Backend Developer", "System Architect", "Technical Lead"],
+            "match_threshold": 0.4
+        },
+        "Data Scientist": {
+            "required_skills": ["python", "r", "statistics", "machine learning", "sql", "pandas"],
+            "career_path": ["Junior Data Scientist", "Senior Data Scientist", "ML Engineer", "AI Architect"],
+            "match_threshold": 0.5
+        },
+        "DevOps Engineer": {
+            "required_skills": ["linux", "docker", "kubernetes", "aws", "ci/cd", "terraform"],
+            "career_path": ["DevOps Engineer", "Site Reliability Engineer", "Cloud Architect", "DevOps Lead"],
+            "match_threshold": 0.4
+        }
+    }
+    
+    # Calculate role matches
+    matches = []
+    for role, requirements in roles.items():
+        matched_skills = [skill for skill in skills if any(req in skill for req in requirements["required_skills"])]
+        match_ratio = len(matched_skills) / len(requirements["required_skills"])
+        
+        if match_ratio >= requirements["match_threshold"]:
+            matches.append({
+                "role": role,
+                "match_percentage": round(match_ratio * 100, 1),
+                "career_path": requirements["career_path"],
+                "missing_skills": [skill for skill in requirements["required_skills"] 
+                                if not any(user_skill in skill for user_skill in skills)]
+            })
+    
+    # Sort by match percentage
+    matches.sort(key=lambda x: x["match_percentage"], reverse=True)
+    
     return {
-        "predicted_role": role,
-        "recommended_path": path
+        "predicted_roles": matches,
+        "total_matches": len(matches)
     }
