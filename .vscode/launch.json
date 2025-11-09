@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run SkillBridge Backend",
+      "type": "python",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": [
+        "main:app",
+        "--reload"
+      ],
+      "cwd": "${workspaceFolder}/backend",
+      "jinja": true,
+      "envFile": "${workspaceFolder}/backend/.env",   // ✅ this line loads your OpenAI key
+      "console": "integratedTerminal"
+    }
+  ]
+}

@@ -1,10 +1,7 @@
-# TODO: Add New API Endpoints
-
-## Steps to Complete
-- [x] Add /detect_domain endpoint
-- [x] Add /recommend endpoint
-- [x] Add /summarize endpoint
-- [x] Test all new endpoints to ensure they work correctly
-- [x] Fix ai_engine.utils import error by creating utils.py
-- [x] Update analytics to return full logs with Pydantic models
-- [x] Add logging for all endpoints
+- [x] Update backend/requirements.txt to add python-jose and passlib for JWT
+- [x] Update backend/database.py to add user model and auth functions
+- [x] Update backend/main.py to add auth endpoints (/register, /login, /profile) and JWT middleware
+- [x] Create frontend/src/contexts/UserContext.jsx for user state management
+- [x] Update frontend/src/App.jsx to wrap with UserProvider and add profile fetching useEffect
+- [x] Install new backend dependencies
+- [ ] Test authentication and profile fetching
