@@ -1,4 +1,5 @@
 import React from "react";
+<<<<<<< HEAD
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { UserProvider } from "./contexts/UserContext";
 import Navbar from "./components/Navbar";
@@ -23,3 +24,25 @@ export default function App() {
     </Router>
   );
 }
+=======
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import AIRecommend from "./pages/AIRecommend";
+import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+
+function App() {
+  return (
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<AIRecommend />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+    </>
+  );
+}
+
+export default App;
+>>>>>>> 686041933804193522e48a97c6023f7b2132512f

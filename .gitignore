@@ -206,5 +206,14 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
+<<<<<<< HEAD
 # Ignore secrets
 backend/.env
+=======
+# Node.js
+node_modules/
+dist/
+
+# Frontend specific
+frontend/.env
+>>>>>>> 686041933804193522e48a97c6023f7b2132512f

@@ -10,12 +10,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@fontsource/poppins": "^5.0.8",
     "@headlessui/react": "^1.7.17",
     "axios": "^1.6.0",
     "framer-motion": "^10.16.4",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.7.1",
+=======
+    "@fontsource/poppins": "^5.2.7",
+    "axios": "^1.13.2",
+    "framer-motion": "^10.16.4",
+    "jspdf": "^3.0.3",
+    "jspdf-autotable": "^5.0.2",
+>>>>>>> 686041933804193522e48a97c6023f7b2132512f
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.18.0"
@@ -26,6 +34,10 @@
     "@vitejs/plugin-react": "^4.0.3",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.45.0",
+<<<<<<< HEAD
+=======
+    "eslint-plugin-react": "^7.32.2",
+>>>>>>> 686041933804193522e48a97c6023f7b2132512f
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "postcss": "^8.4.31",

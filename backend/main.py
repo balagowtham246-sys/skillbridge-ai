@@ -17,6 +17,16 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 app = FastAPI()
 
+<<<<<<< HEAD
+=======
+# Initialize FastAPI app
+app = FastAPI(title="SkillBridge AI", version="2.1")
+
+# 🔹 Initialize database at startup
+init_db()
+
+# 🔹 Allow frontend to communicate with backend
+>>>>>>> 686041933804193522e48a97c6023f7b2132512f
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -46,9 +56,20 @@ class UserLogin(BaseModel):
     email: str
     password: str
 
+<<<<<<< HEAD
 class Token(BaseModel):
     access_token: str
     token_type: str
+=======
+# ---------------------------------------------
+#  API 1: Generate Learning Path  (POST)
+# ---------------------------------------------
+@app.post("/generate_path")
+def generate_path(data: SkillInput):
+    domain = detect_domain(data.goal_role)
+    courses = recommend_courses(data.current_skills)
+    summary = generate_summary(data.goal_role, data.current_skills, domain)
+>>>>>>> 686041933804193522e48a97c6023f7b2132512f
 
 # JWT functions
 def create_access_token(data: dict, expires_delta: timedelta = None):
@@ -61,6 +82,7 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
+<<<<<<< HEAD
 def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
@@ -70,6 +92,12 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
         return email
     except JWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+=======
+    # Log every user request (JSON + DB)
+    log_user_request(data, result)
+    log_event("/generate_path", {"goal_role": data.goal_role, "current_skills": data.current_skills}, result)
+    return result
+>>>>>>> 686041933804193522e48a97c6023f7b2132512f
 
 # Auth endpoints
 @app.post("/register")
@@ -135,6 +163,57 @@ def recommend(skill: str = Query(..., description="user provided skill text")):
 def analytics():
     return {"analytics": get_all_analytics()}
 
+<<<<<<< HEAD
+=======
+
+# ---------------------------------------------
+#  API 3: Detect Domain  (POST)
+# ---------------------------------------------
+@app.post("/detect_domain")
+def get_domain(data: dict):
+    text = data.get("text", "")
+    result = detect_domain(text)
+    log_event("/detect_domain", {"text": text}, {"domain": result})
+    return {"domain": result}
+
+
+# ---------------------------------------------
+#  API 4: Recommend Courses  (POST)
+# ---------------------------------------------
+@app.post("/recommend")
+def recommend(data: dict):
+    skills = data.get("skills", [])
+    result = recommend_courses(skills)
+    log_event("/recommend", {"skills": skills}, result)
+    return result
+
+
+# ---------------------------------------------
+#  API 5: Generate Summary  (POST)
+# ---------------------------------------------
+@app.post("/summarize")
+def summarize(data: dict):
+    text = data.get("text", "")
+    result = generate_summary(text, [], "General")
+    log_event("/summarize", {"text": text}, {"summary": result})
+    return {"summary": result}
+
+
+# ---------------------------------------------
+#  API 6: Predict Role and Career Path  (POST)
+# ---------------------------------------------
+@app.post("/predict_role")
+def predict(data: dict):
+    skills = data.get("skills", [])
+    result = predict_role(skills)
+    log_event("/predict_role", {"skills": skills}, result)
+    return result
+
+
+# ---------------------------------------------
+#  Root & Health Routes
+# ---------------------------------------------
+>>>>>>> 686041933804193522e48a97c6023f7b2132512f
 @app.get("/")
 def root():
     return {"message": "SkillBridge AI backend is running ✅"}
